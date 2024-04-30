@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+data/output/python_tests/multi-qa-mpnet-base-cos-v1/embeddings_*
+code/data_tests.ipynb
+code/semantic_search.ipynb
+images/2023-07-18/
+data/input/images
