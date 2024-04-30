@@ -37,7 +37,7 @@ from google.colab import drive
 drive.mount('/content/drive')
 
 # Clone repo to drive
-!git clone https://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@github.com/abraham-mv/nanny-scraping.git
+!git clone https://github.com/abraham-mv/semantic_search_nannies.git
 !pip install -q -U sentence-transformers rank_bm25
 
 # Go to the repo folder and pull latest changes
