@@ -1,0 +1,309 @@
+# Initial Exploratory Data Analysis
+
+```{r}
+#| include: false
+library(tidyverse)
+library(tidytext)
+library(topicmodels)
+```
+
+In this notebook an EDA is performed on the profiles from the nannys' website. We have around one thousand profiles only from Ontario for now. An initial text analysis was also performed and it's available on the GitHub, however, it seems that the profiles' descriptions are very similar to one another. It appears to me that the LDA model isn't classifying the descriptions correctly.
+
+```{r}
+setwd(dirname(rstudioapi::getSourceEditorContext()$path))
+data_folders <- list.dirs("../data/", full.names = F, recursive  = F)
+most_recent <- as.character(max(as.Date(data_folders)))
+
+profiles_ontario <- read.csv(paste0("../data/",most_recent,"/profiles_ontario.csv")) |> 
+  select(-X) |> unique() 
+
+data("stop_words")
+
+profiles_ontario
+
+```
+## Errors in the data
+First part of the EDA process is to check for duplicated values in columns that should be unique, like link in our case. 
+```{r}
+table(duplicated(profiles_ontario$link))
+```
+There is a significant amount of duplicated links. Some EDA showed that there are some duplicated rows because in some cases a column is set to NA and in others is stored as an empty string. So we can change all the NA values for empty strings and lets see how many repeated rows we have.
+```{r}
+profiles_ontario_filled <- profiles_ontario |> 
+  mutate_all(~ifelse(is.na(.), "", .)) |> 
+  unique()
+
+table(duplicated(profiles_ontario_filled$link))
+```
+Now we don't have repeated links. In this case the link acts as our unique identifier, however, its too long to use it like that moving forward. Therefore, names will be used as id's, but many names are repeated, so we add them an index indicating the row number.
+```{r}
+profiles_ontario <- profiles_ontario_filled |> 
+  mutate(index = 1:length(profiles_ontario_filled$name)) |> 
+  mutate(name = paste0(name," - ",index)) |> 
+  select(-index)
+
+profiles_ontario
+```
+
+
+Getting star ratings
+```{r}
+source("scraping.R")
+profiles_ontario$star_rating <- NA
+profiles_with_stars <- which(profiles_ontario$num_reviews != "No reviews yet")
+
+for (i in profiles_with_stars){
+  profile_page <- read_html(profiles_ontario$link[i])
+  profiles_ontario$star_rating[i] <- star_rating(profile_page)
+}
+profiles_ontario |> 
+  filter(!is.na(star_rating))
+```
+
+```{r}
+gta_mun <- read.csv("../data/gta_municipalities.csv")
+gta_regions <- c(gta_mun$Census.subdivision, "Scarborough", "North York",
+                 "Etobicoke", "York", "Toronto Island", "East York")
+profiles_gta <- profiles_ontario |> filter(city %in% gta_regions)os
+profiles_gta
+```
+
+## Hourly rate by city
+Let's do a regular EDA of the data, before going deeper into the text and sentiment analysis. We will see how the hourly rate of a nanny is affected depending on other variables.
+
+```{r}
+profiles_gta <- profiles_gta |> 
+  mutate(rate = as.numeric(str_extract(rate, "\\d+(?:\\.\\d+)?")),
+         years_exp = as.numeric(str_extract(years_exp, "\\d+(?:\\.\\d+)?"))) |> 
+  rowwise() |> 
+  mutate(total_word_count = sum(str_count(c(short_blurb, reasons, about_me), "\\S+")))
+
+profiles_ontario <- profiles_ontario |> 
+  mutate(rate = as.numeric(str_extract(rate, "\\d+(?:\\.\\d+)?")),
+         years_exp = as.numeric(str_extract(years_exp, "\\d+(?:\\.\\d+)?"))) |> 
+  rowwise() |> 
+  mutate(total_word_count = sum(str_count(c(short_blurb, reasons, about_me), "\\S+")))
+
+profiles_gta |>
+  select(name, about_me, rate, years_exp) |> 
+  unnest_tokens(word, about_me) |> 
+  #anti_join(stop_words |> select(word)) |> 
+  group_by(name) |> 
+  summarise(count_word = n(),
+            rate = max(rate),
+            years_exp = max(years_exp)) |> 
+  left_join(profiles_gta |> select(name, city), join_by(name)) |> 
+  mutate(Toronto = ifelse(city == "Toronto", "yes", "no")) |> 
+  ggplot(aes(years_exp, rate, col = Toronto)) + geom_point() +
+  ylim(c(15,40)) + theme_bw()
+```
+There's no apparent linear relationship between reported years of experience as a nanny and hourly rate. An important thing to notice is that most users didn't report their years of experience, so even if there was a trend it might not be wise to follow it. \
+First of all let's look at the number of profiles per city in the GTA and Ontario
+```{r}
+profiles_gta |> 
+  select(name, city) |> 
+  count(city) |> 
+  ungroup() |> 
+  slice_max(n, n = 10) |> 
+  mutate(city = reorder(city, n)) |> 
+  ggplot(aes( n, city, fill = city)) + 
+  geom_col(show.legend = F) + 
+  ggtitle("Number of profiles per city in the GTA") + 
+  theme_bw() + xlab("") + ylab("")
+
+profiles_ontario |> 
+  select(name, city) |> 
+  count(city) |> 
+  ungroup() |> 
+  slice_max(n, n = 10) |> 
+  mutate(city = reorder(city, n)) |> 
+  ggplot(aes( n, city, fill = city)) + 
+  geom_col(show.legend = F) + 
+  ggtitle("Number of profiles per city in Ontario") + 
+  theme_bw() + xlab("") + ylab("")
+```
+It is clear that most of the profiles are from Toronto, which makes sense given that it's the most populated city in the province by far. One problem is that some users mentioned the part of the city they are live in, which aren't cities themselves, like Scarborough, North/East York, Etobicoke, Toronto Island, etc. There's no way of knowing if the other users who reported living in Toronto don't live in some of these areas as well. \
+Let's look at the average rate per city:
+```{r}
+profiles_ontario |> 
+  filter(rate < 100) |> 
+  select(name, city, rate) |> 
+  group_by(city) |> 
+  summarise(avg_rate = median(rate, na.rm = T)) |>
+  slice_max(avg_rate, n = 5) |>
+  mutate(city = reorder( city, avg_rate)) |> 
+  ggplot(aes( avg_rate, city, fill = city)) + 
+  geom_col(show.legend = F) + 
+  ggtitle("Median hourly rate per city in Ontario") + 
+  theme_bw() + ylab("") + xlab("Median rate")
+
+
+profiles_gta |> 
+  select(city, rate) |> 
+  filter(rate < 100) |> 
+  ggplot(aes(rate, city, fill = city)) + 
+  geom_boxplot(show.legend = F) + ylab("") + 
+  ggtitle("Distribution of hourly rates by city in the GTA") + 
+  theme_bw()
+```
+In the first plot we have the 20 cities in Ontario with the highest median hourly rate, an interesting thing to note is that Toronto isn't among them. In the second figure we can see boxplots of hourly rates per city, evidently Toronto is the most spread out among them, it has the lowest and highest rate. Although there appears to be some significant difference of the offered hourly rate between cities, most of them have very few users, so no conclusion can be reached yet. \
+
+Given that the users are mostly based in Toronto we can do the analysis of rate depending on whether they live in the GTA or not.
+
+```{r}
+profiles_ontario |> 
+  select(name, city) |> 
+  count(city) |> 
+  mutate(Toronto = ifelse(city %in% unique(profiles_gta$city), "yes", "no")) |> 
+  ggplot(aes( n, Toronto, fill = Toronto)) + 
+  geom_col(show.legend = F)
+
+profiles_ontario |> 
+  select(name, city, rate) |> 
+  mutate(GTA = factor(ifelse(city %in% unique(profiles_gta$city), "yes", "no"))) |> 
+  filter(rate < 100) |> 
+  ggplot(aes(GTA, rate, fill = GTA)) + 
+  geom_boxplot(show.legend = F) + theme_bw() + 
+  ggtitle("Distribution of hourly rates depending on whether they live in the GTA")
+```
+```{r}
+rate_GTA_yes <- 
+profiles_ontario |> 
+  select(name, city, rate) |> 
+  mutate(GTA = factor(ifelse(city %in% unique(profiles_gta$city), "yes", "no"))) |> 
+  filter(rate < 100) |> filter(GTA == "yes") |> 
+  select(rate)
+
+rate_GTA_no <- 
+profiles_ontario |> 
+  select(name, city, rate) |> 
+  mutate(GTA = factor(ifelse(city %in% unique(profiles_gta$city), "yes", "no"))) |> 
+  filter(rate < 100) |> filter(GTA == "no") |> 
+  select(rate)
+
+t.test(rate_GTA_yes, rate_GTA_no, var.equal = T)
+```
+There doesn't seem to be a significant difference in the requested hourly rates of users who live in the GTA and those who don't. \
+
+## Hourly rate depending on the services offered
+Checking the rate of nannys according to how many services or qualifications they are listing in their profile.
+```{r}
+profiles_gta_lists <- profiles_gta |> 
+  select(name, city, rate, years_exp, total_word_count, 
+         availability_work, experience_ages, experience_conditions, 
+         details_transport, qualifications_provide, qualifications_languages,
+         services_responsabilities) |> 
+  filter(rate < 100) |> 
+  mutate_at( vars(-all_of(c("name", "rate", "city", "years_exp", "total_word_count"))), 
+             ~factor(ifelse(. == "", 0, str_count(., ",") + 1)))
+
+plot_from_lists <- function(df, factor_column, y_var){
+ temp_df <- df |> 
+  group_by({{factor_column}}) |> 
+  summarise(yloc = 40, 
+            label = paste0("n = ",n()))
+
+  df |> 
+    ggplot(aes({{factor_column}}, {{y_var}}, fill = {{factor_column}})) + 
+    geom_boxplot(show.legend = F) + 
+    geom_text(data = temp_df, aes(y = yloc, label = label), 
+              position = position_dodge(width = 0.75)) +
+    theme_bw() 
+}
+
+plot_from_lists(profiles_gta_lists,  details_transport, rate)
+```
+Now let's check the differences in the distribution on whether a user is offering a particular service like CPR, or if they speak a particular language.
+```{r}
+profiles_some_qual <- profiles_gta |> 
+  select(qualifications_provide, qualifications_languages, rate) |> 
+  mutate(CPR = factor(ifelse(grepl("CPR", qualifications_provide), 1, 0)),
+         French = factor(ifelse(grepl("French", qualifications_languages), 1, 0)),
+         Spanish = factor(ifelse(grepl("Spanish", qualifications_languages), 1, 0))) |> 
+  filter(rate < 100) 
+
+plot_from_lists(profiles_some_qual, CPR, rate)
+```
+It seems that on average the nannys who know CPR will charge a higher hourly rate for their services.
+
+## Number of words
+In this next part we explore the amount of words each user writes in their profiles. We are only counting the sections where the users have to actually write themselves, which are the short blurb under their name, "Reasons to Hire Me" and "About me".
+```{r}
+profiles_ontario_2 <- profiles_ontario |> 
+  rowwise() |> 
+  mutate(total_word_count = sum(str_count(c(short_blurb, reasons, about_me), "\\S+"))) |> 
+  filter(rate < 100)
+
+profiles_gta_2 <- profiles_gta |> 
+  rowwise() |> 
+  mutate(total_word_count = sum(str_count(c(short_blurb, reasons, about_me), "\\S+"))) |> 
+  filter(rate < 100)
+
+
+profiles_ontario |> 
+  group_by(city) |> 
+  summarise(mean_word_count = mean(total_word_count)) |> 
+  slice_max(mean_word_count, n = 20) |> 
+  mutate(city = reorder(city, mean_word_count)) |> 
+  ggplot(aes(mean_word_count, city, fill = city)) + geom_col(show.legend = F) + 
+  theme_bw() + ggtitle("Mean word count in profile description by city in Ontario") + 
+  ylab("")
+
+profiles_gta |> 
+  ggplot(aes(total_word_count, city, fill = city)) + geom_boxplot(show.legend = F) + 
+  ggtitle("Distribution of word counts by city in the GTA") + theme_bw() + ylab("")
+
+```
+In the next plot we are exploring the relationship between the total amount of words in each profile and the requested hourly rate of each nanny.
+```{r}
+profiles_ontario |> 
+  filter(rate < 100) |> 
+  mutate(GTA = factor(ifelse(city %in% unique(profiles_gta$city), "yes", "no"))) |> 
+  ggplot(aes(total_word_count, rate, col = GTA)) + geom_point() + 
+  theme_bw() + ggtitle("Hourly rate vs Total word count in profile") + 
+  xlab("Word count") + ylab("Hourly rate")
+```
+In the next part we are looking at the distribution of total word count in the description by the number of services or qualification each user claim to have or offer.
+```{r}
+plot_from_lists(profiles_gta_lists, availability_work, total_word_count)
+```
+
+With this initial EDA there doesn't seem to be much relationship between the variables in our dataframe, as no interesting patterns have been found yet. In this notebook we analyzing around 1k profiles from the GTA and Ontario in general, more profiles will be scrapped an analyzed in future iterations.
+
+At the end we write the transformed the dataset as it will be useful later.
+```{r}
+profiles_ontario |> 
+  write.csv(paste0("../data/",most_recent,"/profiles_ontario_cleaned.csv"))
+```
+
+
+
+```{r}
+library(rvest)
+library(tidyverse)
+```
+```{r}
+url <- "https://en.wikipedia.org/wiki/List_of_adjectival_and_demonymic_forms_for_countries_and_nations"
+
+read_html(url) |> 
+  html_table()
+```
+```{r}
+country_list1 <- read_html(url) |> html_nodes(xpath = "//td/a") |> 
+  html_text() |> unique()
+country_list1 <- gsub("s$", "", country_list1) |> unique()
+
+country_list2 <- read_html(url) |> html_nodes(xpath = "//td/ul/li/a") |> 
+  html_text() |> unique()
+country_list2 <- gsub("s$", "", country_list2) |> unique()
+
+writeLines(c(country_list1, country_list2) |> unique(), "../data/countries.txt")
+
+```
+
+```{r}
+countries_tibble <- read_html(url) |> html_table()
+countries_tibble[[1]] |> write.csv("../data/input/countries.csv", row.names = F)
+```
+
+

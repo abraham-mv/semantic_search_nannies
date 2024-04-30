@@ -1,0 +1,315 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(tidytext)
+```
+
+In this notebook we analyzed the profiles have changed from the first iteration. The first set of profiles was retrieved on the 2nd of June, and the new set of profiles on the 7th of June. The process to scrape them was the same, that is to retrieve the first 1k distinct profiles from Ontario that appear on the site. Most profiles won't be repeated, since the site orders them by "last-time-active". In the future, it might be better to use the same links in the old dataframe to retrieve new profiles, this way we could compare more profiles.
+
+```{r}
+#data_folders <- list.dirs("../../data/", full.names = F, recursive  = F)
+#most_recent <- as.character(max(as.Date(data_folders)))
+#first_folder <- as.character(min(as.Date(data_folders)))
+#
+#profiles_ontario_new <- read.csv(paste0("../../data/",most_recent,"/profiles_ontario.csv")) |> #select(-X)
+#profiles_ontario_old <- read.csv(paste0("../../data/",first_folder,"/profiles_ontario.csv")) |> #select(-X)
+
+profiles <- read.csv("../data/input/nannies_profiles_canada.csv") |> 
+  mutate(across(c(rate, years_exp, experience_children, num_reviews), 
+                ~as.numeric(str_extract(., "\\d+(?:\\.\\d+)?"))),
+                date = as.Date(date))
+
+sponsor_results <- read.csv("../data/output/python_tests/bm25/sponsor_results_alt_query_2023-09-04.csv")
+
+profiles
+```
+
+
+## Checking how the rates have changed across time
+```{r}
+profiles |> 
+  select(id, name, date, rate, link) |> 
+  distinct(id, rate, .keep_all = T) |> 
+  mutate(date = as.Date(date)) |> 
+  filter(rate < 100) |> 
+  ggplot(aes(as.factor(date), rate, fill=date)) + geom_boxplot(show.legend = F)
+  
+```
+We can see that during July and august the rates have stayed at around $20 median. Next we will retrieve the users who were scraped both in July 18th and a month later, to see if their rates have changed.
+```{r}
+profiles_old <- profiles |> 
+  filter(date == min(date, na.rm = T)) |> 
+  distinct(link, .keep_all = T)
+
+profiles_new <- profiles|> 
+  filter(date == max(date, na.rm = T)) |> 
+  distinct(link, .keep_all = T)
+
+profiles_compare <- profiles_new |> 
+  filter(link %in% profiles_old$link) |> 
+  inner_join(profiles_old, join_by(id, link))
+```
+
+
+We only have a little over a 100
+```{r}
+profiles_compare_rates <- profiles_compare |> 
+  select(starts_with("rate")) |> 
+  rename(new_rate = rate.x, 
+         old_rate = rate.y ) 
+
+profiles_compare_rates |> 
+  filter(new_rate < 100, old_rate < 100) |> 
+  pivot_longer(cols=everything()) |> 
+  ggplot(aes(name, value, fill=name)) + geom_boxplot()
+
+profiles_compare_rates |> 
+  filter(new_rate < 100, old_rate < 100) |> 
+  ggplot(aes(x = 0, y = old_rate)) + geom_point(col="steelblue", size=4) +
+  geom_point(aes(x = 1, y = new_rate), col = "firebrick", size=4) + 
+  geom_segment(aes(x = 0, y = old_rate, xend = 1, yend = new_rate), col="black") + 
+  theme_bw()
+```
+```{r}
+mean(profiles_compare_rates$new_rate - profiles_compare_rates$old_rate, na.rm = T)
+
+table(profiles_compare_rates$new_rate != profiles_compare_rates$old_rate)
+```
+
+Once the data is loaded we need to do an inner join between the dataframes. Then we create a new dataframe with boolean columns indicating if the cell value has changed or not.
+
+```{r}
+retrieve_changes <- function(df){
+  columns <- subset(colnames(profiles), !colnames(profiles) %in% c("id", "link") )
+  df <- df |> mutate_all(~ifelse(is.na(.),"Unknown", .))
+  profiles_changes <- data.frame(
+    sapply(
+      columns, 
+      function(x)df[paste0(x,".x")]  != df[paste0(x,".y")]
+  )  
+) |>  mutate_all(~ifelse(is.na(.), FALSE, .)) 
+  
+return(profiles_changes)
+}
+
+profiles_changes <- retrieve_changes(profiles_compare)
+profiles_changes |> 
+  select(-Active) |> 
+  filter(if_any(everything(), ~ .)) |> 
+  summarise_all(~ sum(., na.rm = T)) |> t()
+```
+
+```{r}
+profiles_compare[profiles_changes$years_exp, ] |> 
+  select(starts_with("years_exp"))
+
+profiles_compare[profiles_changes$province, ] |> 
+  select(starts_with("province"))
+
+profiles_compare[profiles_changes$availability_work, ] |> 
+  select(starts_with("availability_work"))
+```
+
+
+
+## Comparing the same profiles
+In this part of the notebook we take the links from the profiles from June 2nd, and scrape them again, to exactly know how they changed.
+
+
+```{r}
+#| warnings: false
+profiles_new_2 <- read.csv("../data/input/nannies_profiles_new.csv")
+
+profiles_new_2 <- profiles_new_2 |> 
+  mutate(across(c(rate, years_exp, experience_children, num_reviews), 
+                ~as.numeric(str_extract(., "\\d+(?:\\.\\d+)?"))),
+                date = as.Date(date)) |> 
+  separate(location, c("city", "province"), sep = ",")
+profiles_new_2
+```
+```{r}
+thresh_date <- as.Date("2023-09-01") 
+avail_dates <- sort(unique(profiles$date))
+early_dates <- avail_dates[avail_dates < thresh_date]
+later_dates <- avail_dates[avail_dates > thresh_date]
+
+profiles_extended <- bind_rows(profiles, profiles_new_2)
+
+profiles_extended |> 
+  distinct(id, date) |> 
+  mutate(date = as.character(date)) |> 
+    group_by(id) |> 
+    summarise(dates = paste0(date, collapse = " "), 
+              count = n()) |> 
+  filter(count > 1, 
+         grepl(paste0(early_dates, collapse = "|"), dates), 
+         grepl(paste0(later_dates, collapse = "|"), dates)) |> 
+  ungroup()
+    #filter(!grepl(paste0(tail(sort(unique(profiles$date)), n_dates), collapse = "|"), dates)) |> 
+   # select(id) |> pull()
+```
+
+```{r}
+get_dates <- function(date_vector){
+  vector <- date_vector[grepl(paste0(early_dates, collapse = "|"), 
+                                        as.character(date_vector))]
+  cond_vector <- ifelse(length(vector) > 0, vector, rep(thresh_date + 1, 2))
+  class(cond_vector) <- "Date"
+  return(cond_vector)
+}
+
+
+profiles_compare <- profiles_extended |> 
+  group_by(id) |> 
+  summarise(early_date = max(get_dates(date)), 
+            later_date = max(date), 
+            count = n()) |> 
+  filter(early_date < thresh_date, 
+         later_date > thresh_date, 
+         count > 1) |>
+  select(-count) |> 
+  mutate(time_diff = later_date - early_date) |> 
+  pivot_longer(cols = c(early_date, later_date), values_to = "date", names_to = "date_type") |> 
+  left_join(profiles_extended, by = join_by(id, date)) |> 
+  distinct(id, date, .keep_all = T)
+```
+
+```{r}
+profiles_compare |> 
+  filter(rate < 100) |> 
+  ggplot(aes( rate, y=..density.., fill = date_type)) + 
+  geom_histogram(show.legend = T, alpha=0.5, bins = 50)
+```
+```{r}
+profiles_compare |> 
+  select(id, date_type, rate) |> 
+  filter(rate < 100) |> 
+  pivot_wider(names_from = date_type, values_from = rate) |> 
+  ggplot(aes(x = 0, y = early_date)) + geom_point(col="steelblue", size=4) +
+  geom_point(aes(x = 1, y = later_date), col = "firebrick", size=4) + 
+  geom_segment(aes(x = 0, y = early_date, xend = 1, yend = later_date), col="black") + 
+  theme_bw()
+```
+```{r}
+profiles_compare_wide <- profiles_compare |> 
+  select(id, time_diff, date_type, rate, years_exp, Active, link) |> 
+  pivot_wider(id_cols = c(id, time_diff, link), 
+              names_from = date_type, values_from = c(rate, years_exp, Active)) |> 
+  mutate(inactive_profile = as.factor(ifelse(Active_later_date == "Profile was removed" |
+                                            Active_later_date == "Active over a week ago", 1, 0)), 
+         removed_profile = as.factor(ifelse(Active_later_date == "Profile was removed", 1, 0))) |> 
+  left_join(sponsor_results |> select(link, sponsor), join_by(link)) |> 
+  mutate(sponsor = as.factor(ifelse(is.na(sponsor), 0, sponsor)))
+
+
+plot_from_lists <- function(df, factor_column, y_var, title = ""){
+ temp_df <- df |> 
+  group_by({{factor_column}}) |> 
+  summarise(yloc = 55, 
+            label = paste0(n()))
+
+  df |> 
+    ggplot(aes({{factor_column}}, {{y_var}}, fill = {{factor_column}})) + 
+    geom_boxplot(show.legend = F) + 
+    geom_text(data = temp_df, aes(y = yloc, label = label), 
+              position = position_dodge(width = 0.75)) +
+    theme_bw() + ggtitle(title)
+}
+
+plot_from_lists(profiles_compare_wide |> filter(rate_early_date < 100), 
+                inactive_profile, rate_early_date)
+
+plot_from_lists(profiles_compare_wide |> filter(rate_early_date < 100), 
+                removed_profile, rate_early_date)
+
+plot_from_lists(profiles_compare_wide, 
+                removed_profile, years_exp_early_date)
+
+```
+
+
+```{r}
+table(profiles_compare_wide$sponsor) 
+```
+```{r}
+profiles_compare_wide |> 
+  group_by(inactive_profile) |> 
+  summarise(count = n(),
+            num_sponsor = sum(sponsor == 1), 
+            prop_sponsor = mean(sponsor == 1)*100)
+
+profiles_compare_wide |> 
+  group_by(removed_profile) |> 
+  summarise(count = n(),
+            num_sponsor = sum(sponsor == 1), 
+            prop_sponsor = mean(sponsor == 1)*100)
+```
+
+
+```{r}
+profiles_compare_2 <- read.csv("../data/input/profiles_compare.csv") |> select(-X)
+profile_changes_2 <- retrieve_changes(profiles_compare_2)
+
+profile_changes_2 |> 
+  select(-Active) |> 
+  filter(if_any(everything(), ~ .)) |> 
+  summarise_all(~ sum(., na.rm = T)) |> t()
+```
+```{r}
+profiles_compare_rates_2 <- profiles_compare_2[profile_changes_2$rate, ] |> 
+  select(starts_with("rate")) |> 
+  rename(old_rate = rate.y, 
+         new_rate = rate.x)
+
+profiles_compare_rates_2 |> 
+  pivot_longer(cols=everything()) |> 
+  ggplot(aes(name, value, fill=name)) + geom_boxplot()
+
+profiles_compare_rates_2 |> 
+ggplot(aes(x = 0, y = old_rate)) + geom_point(col="steelblue", size=4) +
+  geom_point(aes(x = 1, y = new_rate), col = "firebrick", size=4) + 
+  geom_segment(aes(x = 0, y = old_rate, xend = 1, yend = new_rate), col="black") + 
+  theme_bw()
+
+```
+
+```{r}
+mean(profiles_compare_rates_2$new_rate - profiles_compare_rates_2$old_rate, na.rm = T)
+
+table(profiles_compare_rates_2$new_rate > profiles_compare_rates_2$old_rate)
+```
+```{r}
+profiles_compare_2 |> 
+  select(starts_with("Active")) |>
+  mutate_all(~ifelse(. == "Active over a week ago", "Over a week" , "Less than a week")) |> 
+  count(Active.x)
+             
+profiles_compare_2 |> 
+  select(starts_with("Active"))
+```
+
+```{r}
+profiles_compare_2 |> 
+  select(starts_with("Active")) |> 
+  filter(any(grepl(paste(c("day", "days"), 
+                                        collapse = "|"), 
+                                  Active.x)))
+```
+```{r}
+profiles_compare_2 |> 
+  select(starts_with("Active")) |> 
+  filter(Active.x == "Active over a week ago")
+```
+
+
+```{r}
+#profiles_compare_2 |> write.csv("../data/input/profiles_compare.csv")
+```
+```{r}
+getwd()
+```
+

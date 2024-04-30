@@ -1,0 +1,567 @@
+id,query,country,model
+21613,I am from,Ukraine,bm25
+23620,I am from,Japan,bm25
+22049,I am from,Thailand,bm25
+23103,I am from,India,bm25
+22455,I am from,Philippines,bm25
+20901,I am from,Mexico,bm25
+1536,I am from,Philippines,bm25
+16508,I am from,India,bm25
+9975,I am from,Ukraine,bm25
+9700,I am from,Venezuela,bm25
+22842,I am from,Brazil,bm25
+5734,I am from,Nigeria,bm25
+22191,I am from,Philippines,bm25
+9790,I am from,Bolivia,bm25
+11196,I am from,Philippines,bm25
+7623,I am from,Philippines,bm25
+23459,I am from,Philippines,bm25
+21144,I am from,Philippines,bm25
+8965,I am from,Colombia,bm25
+23483,I am from,Chile,bm25
+7549,I am from,India,bm25
+8438,I am from,South Africa,bm25
+4756,I am from,Philippines,bm25
+12920,I am from,Mexico,bm25
+21576,I am from,Colombia,bm25
+13473,I am from,Ghana,bm25
+12157,I am from,Nigeria,bm25
+6993,I am from,Taiwan[m],bm25
+1879,I am from,Kenya,bm25
+10397,I am from,Philippines,bm25
+20704,I am from,India,bm25
+22461,I am from,Philippines,bm25
+21794,I am from,Philippines,bm25
+12968,I am from,Ghana,bm25
+19936,I am from,Brazil,bm25
+9020,I am from,Philippines,bm25
+9095,I am from,Mexico,bm25
+5409,I am from,Philippines,bm25
+21857,I am from,Nepal,bm25
+5062,I am from,Colombia,bm25
+10157,I am from,Brazil,bm25
+11206,I am from,Philippines,bm25
+13519,I am from,Thailand,bm25
+5471,I am from,Philippines,bm25
+10889,I am from,Kenya,bm25
+11125,I am from,Kenya,bm25
+23661,I am from,Ecuador,bm25
+18909,I am from,India,bm25
+13639,I am from,Zambia,bm25
+1757,I am from,Philippines,bm25
+20994,I am from,Jamaica,bm25
+6241,I am from,Japan,bm25
+7427,I am from,Philippines,bm25
+5183,I am from,Philippines,bm25
+15730,I am from,India,bm25
+6345,I am from,India,bm25
+8771,I am from,Mexico,bm25
+22812,I am from,Nigeria,bm25
+10927,I am from,England,bm25
+2750,I am from,Brazil,bm25
+19487,I am from,Zimbabwe,bm25
+23346,I am from,United Kingdom,bm25
+15918,I am from,Philippines,bm25
+11847,I am from,Scotland,bm25
+1945,I am from,Philippines,bm25
+10930,I am from,Nigeria,bm25
+23673,I am from,Argentina,bm25
+22047,I am from,Nigeria,bm25
+19762,I am from,Brazil,bm25
+16162,I am from,Brazil,bm25
+7568,I am from,Philippines,bm25
+18997,I am from,Philippines,bm25
+15256,I am from,United Arab Emirates,bm25
+7488,I am from,Germany,bm25
+5671,I am from,Thailand,bm25
+23460,I am from,Mexico,bm25
+16814,I am from,Philippines,bm25
+7756,I am from,India,bm25
+12923,I am from,Philippines,bm25
+14184,I am from,Philippines,bm25
+992,I am from,Ireland[i],bm25
+19619,I am from,Egypt,bm25
+18292,I am from,Colombia,bm25
+1516,I am from,Colombia,bm25
+3099,I am from,Colombia,bm25
+10848,I am from,Colombia,bm25
+14698,I am from,Brazil,bm25
+10895,I am from,Colombia,bm25
+22130,I am from,Nigeria,bm25
+19832,I am from,Nigeria,bm25
+18166,I am from,Philippines,bm25
+12553,I am from,Philippines,bm25
+16433,I am from,Philippines,bm25
+15991,I am from,Uganda,bm25
+6255,I am from,Nigeria,bm25
+5076,I am from,Philippines,bm25
+13179,I am from,Philippines,bm25
+11850,I am from,Ireland[i],bm25
+21126,I am from,Philippines,bm25
+17556,I am from,Philippines,bm25
+6384,I am from,Philippines,bm25
+11679,I am from,Mexico,bm25
+16200,I am from,Venezuela,bm25
+10040,I am from,Mexico,bm25
+22163,Where are you from?,Philippines,bm25
+11542,Where are you from?,Ireland[i],bm25
+8620,Where are you from?,Mexico,bm25
+18840,Where are you from?,Philippines,bm25
+22681,Where are you from?,Philippines,bm25
+14722,Where are you from?,Ireland[i],bm25
+15487,Where are you from?,Australia,bm25
+8874,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+8685,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+18385,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+4559,I am from,Colombia,multi-qa-mpnet-base-cos-v1
+18073,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+5872,I am from,Ecuador,multi-qa-mpnet-base-cos-v1
+6242,I am from,India,multi-qa-mpnet-base-cos-v1
+5034,I am from,Japan,multi-qa-mpnet-base-cos-v1
+3288,I am from,Brazil,multi-qa-mpnet-base-cos-v1
+12823,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+15886,I am from,Northern Ireland,multi-qa-mpnet-base-cos-v1
+9658,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+7157,I am from,Mexico,multi-qa-mpnet-base-cos-v1
+17596,I am from,Panama,multi-qa-mpnet-base-cos-v1
+11846,I am from,Japan,multi-qa-mpnet-base-cos-v1
+18485,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+5356,I am from,Nigeria,multi-qa-mpnet-base-cos-v1
+6357,I am from,Peru,multi-qa-mpnet-base-cos-v1
+2619,I am from,Brazil,multi-qa-mpnet-base-cos-v1
+12675,I am from,Ghana,multi-qa-mpnet-base-cos-v1
+6920,I am from,United Kingdom,multi-qa-mpnet-base-cos-v1
+11560,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+566,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+20186,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+15454,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+17097,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+12737,I am from,Mexico,multi-qa-mpnet-base-cos-v1
+8547,I am from,Japan,multi-qa-mpnet-base-cos-v1
+6783,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+16401,I am from,Spain,multi-qa-mpnet-base-cos-v1
+1274,I am from,Zimbabwe,multi-qa-mpnet-base-cos-v1
+9178,I am from,Ecuador,multi-qa-mpnet-base-cos-v1
+18491,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+4941,I am from,Japan,multi-qa-mpnet-base-cos-v1
+7155,I am from,India,multi-qa-mpnet-base-cos-v1
+6976,I am from,Mexico,multi-qa-mpnet-base-cos-v1
+19106,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+19099,I am from,Kenya,multi-qa-mpnet-base-cos-v1
+13747,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+13616,I am from,Mexico,multi-qa-mpnet-base-cos-v1
+17976,I am from,Brazil,multi-qa-mpnet-base-cos-v1
+18966,I am from,Scotland,multi-qa-mpnet-base-cos-v1
+16756,I am from,Australia,multi-qa-mpnet-base-cos-v1
+6910,I am from,Colombia,multi-qa-mpnet-base-cos-v1
+21083,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+15809,I am from,Thailand,multi-qa-mpnet-base-cos-v1
+6009,I am from,Peru,multi-qa-mpnet-base-cos-v1
+3938,I am from,Brazil,multi-qa-mpnet-base-cos-v1
+9412,I am from,India,multi-qa-mpnet-base-cos-v1
+8852,I am from,Mexico,multi-qa-mpnet-base-cos-v1
+20263,I am from,Peru,multi-qa-mpnet-base-cos-v1
+5109,I am from,Mexico,multi-qa-mpnet-base-cos-v1
+18081,I am from,Brazil,multi-qa-mpnet-base-cos-v1
+7882,I am from,France,multi-qa-mpnet-base-cos-v1
+15712,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+6659,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+478,I am from,United Arab Emirates,multi-qa-mpnet-base-cos-v1
+5103,I am from,Ireland[i],multi-qa-mpnet-base-cos-v1
+8120,I am from,Angola,multi-qa-mpnet-base-cos-v1
+6213,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+14597,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+3700,I am from,Argentina,multi-qa-mpnet-base-cos-v1
+20510,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+2038,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+11461,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+7231,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+5017,I am from,Germany,multi-qa-mpnet-base-cos-v1
+6728,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+6777,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+4947,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+17447,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+16811,I am from,Nigeria,multi-qa-mpnet-base-cos-v1
+8680,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+5647,I am from,Japan,multi-qa-mpnet-base-cos-v1
+15850,I am from,Colombia,multi-qa-mpnet-base-cos-v1
+10641,I am from,Kenya,multi-qa-mpnet-base-cos-v1
+11150,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+5983,I am from,Mexico,multi-qa-mpnet-base-cos-v1
+6895,I am from,Japan,multi-qa-mpnet-base-cos-v1
+7565,I am from,Mexico,multi-qa-mpnet-base-cos-v1
+9404,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+8716,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+18110,I am from,Netherlands,multi-qa-mpnet-base-cos-v1
+8528,I am from,Uganda,multi-qa-mpnet-base-cos-v1
+14248,I am from,Mexico,multi-qa-mpnet-base-cos-v1
+2806,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+10973,I am from,Brazil,multi-qa-mpnet-base-cos-v1
+6865,I am from,Brazil,multi-qa-mpnet-base-cos-v1
+10631,I am from,Portugal,multi-qa-mpnet-base-cos-v1
+10468,I am from,France,multi-qa-mpnet-base-cos-v1
+5144,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+6942,I am from,Nigeria,multi-qa-mpnet-base-cos-v1
+8388,I am from,Kenya,multi-qa-mpnet-base-cos-v1
+16074,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+14670,I am from,Japan,multi-qa-mpnet-base-cos-v1
+19665,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+19166,I am from,Colombia,multi-qa-mpnet-base-cos-v1
+11112,I am from,Kuwait,multi-qa-mpnet-base-cos-v1
+3500,I am from,Jamaica,multi-qa-mpnet-base-cos-v1
+10149,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+4620,I am from,Colombia,multi-qa-mpnet-base-cos-v1
+15037,I am from,Germany,multi-qa-mpnet-base-cos-v1
+15602,I am from,Mexico,multi-qa-mpnet-base-cos-v1
+6157,I am from,Czech Republic,multi-qa-mpnet-base-cos-v1
+10958,I am from,Mexico,multi-qa-mpnet-base-cos-v1
+6325,I am from,Mexico,multi-qa-mpnet-base-cos-v1
+8323,I am from,Mexico,multi-qa-mpnet-base-cos-v1
+4581,I am from,Kenya,multi-qa-mpnet-base-cos-v1
+8793,I am from,Brazil,multi-qa-mpnet-base-cos-v1
+10281,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+5997,I am from,Argentina,multi-qa-mpnet-base-cos-v1
+7710,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+5493,I am from,India,multi-qa-mpnet-base-cos-v1
+3221,I am from,Brazil,multi-qa-mpnet-base-cos-v1
+20361,I am from,Nigeria,multi-qa-mpnet-base-cos-v1
+13317,I am from,Bahrain,multi-qa-mpnet-base-cos-v1
+21124,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+4814,I am from,Mexico,multi-qa-mpnet-base-cos-v1
+4925,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+7460,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+2439,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+3172,I am from,North Korea,multi-qa-mpnet-base-cos-v1
+19586,I am from,Italy,multi-qa-mpnet-base-cos-v1
+1969,I am from,Chile,multi-qa-mpnet-base-cos-v1
+5620,I am from,India,multi-qa-mpnet-base-cos-v1
+5593,I am from,Thailand,multi-qa-mpnet-base-cos-v1
+2463,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+14017,I am from,Dominican Republic,multi-qa-mpnet-base-cos-v1
+10632,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+19136,I am from,Hong Kong,multi-qa-mpnet-base-cos-v1
+5903,I am from,Mexico,multi-qa-mpnet-base-cos-v1
+2542,I am from,India,multi-qa-mpnet-base-cos-v1
+17352,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+11338,I am from,Belgium,multi-qa-mpnet-base-cos-v1
+13263,I am from,Hong Kong,multi-qa-mpnet-base-cos-v1
+12298,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+17473,I am from,Ireland[i],multi-qa-mpnet-base-cos-v1
+2166,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+5899,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+5199,I am from,Brazil,multi-qa-mpnet-base-cos-v1
+17741,I am from,Spain,multi-qa-mpnet-base-cos-v1
+17407,I am from,Nigeria,multi-qa-mpnet-base-cos-v1
+7636,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+266,I am from,Argentina,multi-qa-mpnet-base-cos-v1
+17651,I am from,Senegal,multi-qa-mpnet-base-cos-v1
+17625,I am from,Singapore,multi-qa-mpnet-base-cos-v1
+20954,I am from,Ecuador,multi-qa-mpnet-base-cos-v1
+4112,I am from,Mexico,multi-qa-mpnet-base-cos-v1
+8473,I am from,Spain,multi-qa-mpnet-base-cos-v1
+7164,I am from,Ireland[i],multi-qa-mpnet-base-cos-v1
+5435,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+5414,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+14401,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+4771,I am from,Italy,multi-qa-mpnet-base-cos-v1
+16888,I am from,Nigeria,multi-qa-mpnet-base-cos-v1
+9622,I am from,Brazil,multi-qa-mpnet-base-cos-v1
+8344,I am from,Austria,multi-qa-mpnet-base-cos-v1
+18641,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+579,I am from,Mexico,multi-qa-mpnet-base-cos-v1
+3709,I am from,Japan,multi-qa-mpnet-base-cos-v1
+2063,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+19765,I am from,Colombia,multi-qa-mpnet-base-cos-v1
+4894,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+8670,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+5005,I am from,Brazil,multi-qa-mpnet-base-cos-v1
+15639,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+16648,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+7127,I am from,Colombia,multi-qa-mpnet-base-cos-v1
+18655,Where are you from?,Barbados,multi-qa-mpnet-base-cos-v1
+6312,Where are you from?,Costa Rica,multi-qa-mpnet-base-cos-v1
+12766,Where are you from?,Germany,multi-qa-mpnet-base-cos-v1
+20046,Where are you from?,Costa Rica,multi-qa-mpnet-base-cos-v1
+17395,Where are you from?,Australia,multi-qa-mpnet-base-cos-v1
+10810,Where are you from?,Peru,multi-qa-mpnet-base-cos-v1
+4732,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+5970,Where are you from?,Angola,multi-qa-mpnet-base-cos-v1
+9760,Where are you from?,Colombia,multi-qa-mpnet-base-cos-v1
+2856,Where are you from?,Kenya,multi-qa-mpnet-base-cos-v1
+14287,Where are you from?,Kenya,multi-qa-mpnet-base-cos-v1
+19769,Where are you from?,Jamaica,multi-qa-mpnet-base-cos-v1
+10400,Where are you from?,Chile,multi-qa-mpnet-base-cos-v1
+2920,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+14525,Where are you from?,Thailand,multi-qa-mpnet-base-cos-v1
+4252,Where are you from?,South Africa,multi-qa-mpnet-base-cos-v1
+20586,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+11256,Where are you from?,Spain,multi-qa-mpnet-base-cos-v1
+20864,Where are you from?,Wales,multi-qa-mpnet-base-cos-v1
+3279,Where are you from?,Turkey,multi-qa-mpnet-base-cos-v1
+16499,Where are you from?,Turkey,multi-qa-mpnet-base-cos-v1
+13136,Where are you from?,India,multi-qa-mpnet-base-cos-v1
+14920,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+5770,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+19442,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+20039,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+20854,Where are you from?,Thailand,multi-qa-mpnet-base-cos-v1
+7851,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+9527,Where are you from?,Brazil,multi-qa-mpnet-base-cos-v1
+14622,Where are you from?,Moldova,multi-qa-mpnet-base-cos-v1
+11977,Where are you from?,Brazil,multi-qa-mpnet-base-cos-v1
+17435,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+12083,Where are you from?,Nigeria,multi-qa-mpnet-base-cos-v1
+8037,Where are you from?,New Zealand,multi-qa-mpnet-base-cos-v1
+4412,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+8882,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+9602,Where are you from?,Colombia,multi-qa-mpnet-base-cos-v1
+4586,Where are you from?,Colombia,multi-qa-mpnet-base-cos-v1
+3450,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+5971,Where are you from?,Ukraine,multi-qa-mpnet-base-cos-v1
+21154,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+5024,Where are you from?,Jamaica,multi-qa-mpnet-base-cos-v1
+14029,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+16117,Where are you from?,India,multi-qa-mpnet-base-cos-v1
+7064,Where are you from?,Romania,multi-qa-mpnet-base-cos-v1
+16032,Where are you from?,Japan,multi-qa-mpnet-base-cos-v1
+18808,Where are you from?,Ukraine,multi-qa-mpnet-base-cos-v1
+16384,Where are you from?,Ecuador,multi-qa-mpnet-base-cos-v1
+4103,Where are you from?,Indonesia,multi-qa-mpnet-base-cos-v1
+20505,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+14656,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+1015,Where are you from?,Ukraine,multi-qa-mpnet-base-cos-v1
+7131,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+10943,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+14657,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+16039,Where are you from?,Peru,multi-qa-mpnet-base-cos-v1
+15384,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+13866,Where are you from?,Colombia,multi-qa-mpnet-base-cos-v1
+15556,Where are you from?,Germany,multi-qa-mpnet-base-cos-v1
+12963,Where are you from?,Jamaica,multi-qa-mpnet-base-cos-v1
+8442,Where are you from?,Brazil,multi-qa-mpnet-base-cos-v1
+8432,Where are you from?,Hong Kong,multi-qa-mpnet-base-cos-v1
+7827,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+5845,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+16733,Where are you from?,England,multi-qa-mpnet-base-cos-v1
+12031,Where are you from?,Scotland,multi-qa-mpnet-base-cos-v1
+6707,Where are you from?,Hong Kong,multi-qa-mpnet-base-cos-v1
+543,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+13412,Where are you from?,Brazil,multi-qa-mpnet-base-cos-v1
+13362,Where are you from?,Thailand,multi-qa-mpnet-base-cos-v1
+10878,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+21184,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+16695,Where are you from?,Argentina,multi-qa-mpnet-base-cos-v1
+6371,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+3067,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+8647,Where are you from?,Paraguay,multi-qa-mpnet-base-cos-v1
+16007,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+5226,Where are you from?,Thailand,multi-qa-mpnet-base-cos-v1
+5158,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+18783,Where are you from?,Australia,multi-qa-mpnet-base-cos-v1
+11856,Where are you from?,Saudi Arabia,multi-qa-mpnet-base-cos-v1
+12742,Where are you from?,Colombia,multi-qa-mpnet-base-cos-v1
+7119,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+2549,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+8640,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+21139,Where are you from?,Germany,multi-qa-mpnet-base-cos-v1
+15286,Where are you from?,New Zealand,multi-qa-mpnet-base-cos-v1
+12332,Where are you from?,India,multi-qa-mpnet-base-cos-v1
+8618,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+11449,Where are you from?,Kenya,multi-qa-mpnet-base-cos-v1
+812,Where are you from?,Jamaica,multi-qa-mpnet-base-cos-v1
+5721,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+10439,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+16210,Where are you from?,Venezuela,multi-qa-mpnet-base-cos-v1
+11070,Where are you from?,Hungary,multi-qa-mpnet-base-cos-v1
+8752,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+1850,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+12971,Where are you from?,Ireland[i],multi-qa-mpnet-base-cos-v1
+20935,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+16452,Where are you from?,Oman,multi-qa-mpnet-base-cos-v1
+5096,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+7885,Where are you from?,Hong Kong,multi-qa-mpnet-base-cos-v1
+5229,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+12373,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+13004,Where are you from?,Brazil,multi-qa-mpnet-base-cos-v1
+14079,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+19938,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+20532,Where are you from?,Israel,multi-qa-mpnet-base-cos-v1
+11493,Where are you from?,Russia[l],multi-qa-mpnet-base-cos-v1
+6379,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+20014,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+510,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+6278,Where are you from?,Colombia,multi-qa-mpnet-base-cos-v1
+17324,Where are you from?,Bhutan,multi-qa-mpnet-base-cos-v1
+10047,Where are you from?,Brazil,multi-qa-mpnet-base-cos-v1
+3760,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+4950,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+15884,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+4127,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+10683,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+10229,Where are you from?,Jamaica,multi-qa-mpnet-base-cos-v1
+14879,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+14022,Where are you from?,Italy,multi-qa-mpnet-base-cos-v1
+15817,Where are you from?,Macau,multi-qa-mpnet-base-cos-v1
+17532,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+7353,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+8936,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+9768,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+14427,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+16393,Where are you from?,France,multi-qa-mpnet-base-cos-v1
+19908,Where are you from?,Indonesia,multi-qa-mpnet-base-cos-v1
+15713,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+14693,Where are you from?,Tanzania,multi-qa-mpnet-base-cos-v1
+5070,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+12147,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+20454,Where are you from?,Brazil,multi-qa-mpnet-base-cos-v1
+6673,Where are you from?,Kuwait,multi-qa-mpnet-base-cos-v1
+7330,Where are you from?,Oman,multi-qa-mpnet-base-cos-v1
+4418,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+9132,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+2894,Where are you from?,Chile,multi-qa-mpnet-base-cos-v1
+4129,Where are you from?,Poland,multi-qa-mpnet-base-cos-v1
+4304,Where are you from?,India,multi-qa-mpnet-base-cos-v1
+12692,Where are you from?,Nigeria,multi-qa-mpnet-base-cos-v1
+9099,Where are you from?,Colombia,multi-qa-mpnet-base-cos-v1
+4847,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+8805,Where are you from?,Dominican Republic,multi-qa-mpnet-base-cos-v1
+4520,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+14588,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+7387,Where are you from?,Saudi Arabia,multi-qa-mpnet-base-cos-v1
+21281,Where are you from?,England,multi-qa-mpnet-base-cos-v1
+19714,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+16110,Where are you from?,Japan,multi-qa-mpnet-base-cos-v1
+11764,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+8253,Where are you from?,Brazil,multi-qa-mpnet-base-cos-v1
+3208,Where are you from?,Portugal,multi-qa-mpnet-base-cos-v1
+13332,Where are you from?,Kenya,multi-qa-mpnet-base-cos-v1
+18720,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+10740,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+20051,Where are you from?,South Korea,multi-qa-mpnet-base-cos-v1
+16271,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+12978,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+5980,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+2780,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+6966,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+8929,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+7971,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+6387,Where are you from?,Ethiopia,multi-qa-mpnet-base-cos-v1
+7143,Where are you from?,Jamaica,multi-qa-mpnet-base-cos-v1
+18142,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+16729,Where are you from?,Australia,multi-qa-mpnet-base-cos-v1
+6224,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+4294,Where are you from?,Belgium,multi-qa-mpnet-base-cos-v1
+4424,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+6687,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+14238,Where are you from?,Scotland,multi-qa-mpnet-base-cos-v1
+16127,Where are you from?,Czech Republic,multi-qa-mpnet-base-cos-v1
+10083,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+7121,Where are you from?,Ukraine,multi-qa-mpnet-base-cos-v1
+4448,Where are you from?,Taiwan[m],multi-qa-mpnet-base-cos-v1
+4670,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+7996,Where are you from?,Colombia,multi-qa-mpnet-base-cos-v1
+21034,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+1858,Where are you from?,Colombia,multi-qa-mpnet-base-cos-v1
+11194,Where are you from?,Japan,multi-qa-mpnet-base-cos-v1
+16232,Where are you from?,Ghana,multi-qa-mpnet-base-cos-v1
+5693,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+19187,Where are you from?,Ukraine,multi-qa-mpnet-base-cos-v1
+21116,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+4296,Where are you from?,France,multi-qa-mpnet-base-cos-v1
+1779,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+21185,Where are you from?,Brazil,multi-qa-mpnet-base-cos-v1
+8441,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+16075,Where are you from?,Japan,multi-qa-mpnet-base-cos-v1
+11124,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+7462,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+17941,Where are you from?,Ireland[i],multi-qa-mpnet-base-cos-v1
+11222,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+5015,Where are you from?,Hong Kong,multi-qa-mpnet-base-cos-v1
+13409,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+6504,Where are you from?,Argentina,multi-qa-mpnet-base-cos-v1
+8912,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+15592,Where are you from?,China,multi-qa-mpnet-base-cos-v1
+11938,Where are you from?,Germany,multi-qa-mpnet-base-cos-v1
+242,Where are you from?,Chile,multi-qa-mpnet-base-cos-v1
+3647,Where are you from?,Argentina,multi-qa-mpnet-base-cos-v1
+6169,Where are you from?,Argentina,multi-qa-mpnet-base-cos-v1
+7860,Where are you from?,Dominican Republic,multi-qa-mpnet-base-cos-v1
+4263,Where are you from?,Cuba,multi-qa-mpnet-base-cos-v1
+16198,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+1643,Where are you from?,United Kingdom,multi-qa-mpnet-base-cos-v1
+9225,Where are you from?,France,multi-qa-mpnet-base-cos-v1
+15818,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+7145,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+6815,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+11594,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+11839,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+20094,Where are you from?,Taiwan[m],multi-qa-mpnet-base-cos-v1
+4918,Where are you from?,Colombia,multi-qa-mpnet-base-cos-v1
+7456,Where are you from?,Zimbabwe,multi-qa-mpnet-base-cos-v1
+15925,Where are you from?,Czech Republic,multi-qa-mpnet-base-cos-v1
+20492,Where are you from?,Italy,multi-qa-mpnet-base-cos-v1
+17192,Where are you from?,Ireland[i],multi-qa-mpnet-base-cos-v1
+13282,Where are you from?,Nigeria,multi-qa-mpnet-base-cos-v1
+2704,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+10749,Where are you from?,Australia,multi-qa-mpnet-base-cos-v1
+16031,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+15406,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+4858,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+19971,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+10137,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+12993,Where are you from?,Cyprus,multi-qa-mpnet-base-cos-v1
+18938,Where are you from?,Ireland[i],multi-qa-mpnet-base-cos-v1
+7539,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+17430,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+15061,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+12902,Where are you from?,Brazil,multi-qa-mpnet-base-cos-v1
+13383,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+13112,Where are you from?,Ireland[i],multi-qa-mpnet-base-cos-v1
+7102,Where are you from?,Nigeria,multi-qa-mpnet-base-cos-v1
+10747,Where are you from?,South Africa,multi-qa-mpnet-base-cos-v1
+19204,I am from,United Kingdom,bm25
+608,I am from,Italy,bm25
+17041,I am from,Philippines,bm25
+6741,I am from,Philippines,bm25
+2949,I am from,Brazil,bm25
+21153,I am from,Philippines,bm25
+6808,I am from,Argentina,bm25
+13594,I am from,Poland,bm25
+15988,I am from,Philippines,bm25
+10206,I am from,Nigeria,bm25
+155,I am from,Thailand,bm25
+1055,I am from,Mexico,bm25
+12310,I am from,India,bm25
+16284,I am from,Mexico,bm25
+5968,Where are you from?,Brazil,multi-qa-mpnet-base-cos-v1
+17631,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+15394,Where are you from?,Kenya,multi-qa-mpnet-base-cos-v1
+21161,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+13620,Where are you from?,Mexico,multi-qa-mpnet-base-cos-v1
+19208,Where are you from?,Philippines,multi-qa-mpnet-base-cos-v1
+13152,Where are you from?,Argentina,multi-qa-mpnet-base-cos-v1
+14971,Where are you from?,Senegal,multi-qa-mpnet-base-cos-v1
+19880,Where are you from?,Singapore,multi-qa-mpnet-base-cos-v1
+10650,Where are you from?,Hong Kong,multi-qa-mpnet-base-cos-v1
+15344,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+19071,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+10594,I am from,Colombia,multi-qa-mpnet-base-cos-v1
+6367,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+16817,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+8808,I am from,Mexico,multi-qa-mpnet-base-cos-v1
+13162,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+4087,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+16544,I am from,Colombia,multi-qa-mpnet-base-cos-v1
+6691,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+15957,I am from,Ghana,multi-qa-mpnet-base-cos-v1
+1053,I am from,Japan,multi-qa-mpnet-base-cos-v1
+21152,I am from,Mexico,multi-qa-mpnet-base-cos-v1
+16909,I am from,Hungary,multi-qa-mpnet-base-cos-v1
+11442,I am from,Japan,multi-qa-mpnet-base-cos-v1
+8816,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+21063,I am from,Chile,multi-qa-mpnet-base-cos-v1
+10897,I am from,Mexico,multi-qa-mpnet-base-cos-v1
+5546,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+11509,I am from,Philippines,multi-qa-mpnet-base-cos-v1
+18831,Where are you from?,United States of America,multi-qa-mpnet-base-cos-v1
+20689,Where are you from?,United States of America,multi-qa-mpnet-base-cos-v1

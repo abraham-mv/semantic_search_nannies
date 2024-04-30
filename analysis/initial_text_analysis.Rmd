@@ -1,0 +1,286 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+library(tidyverse)
+library(tidytext)
+library(topicmodels)
+library(igraph)
+library(ggraph)
+```
+
+Now we will use sentiment lexicons to do some sentiment analysis. Given these are individuals who are trying to convince families to make them responsible of their children, it's expected that the descriptions will be overwhelmingly positive.
+
+```{r}
+setwd(dirname(rstudioapi::getSourceEditorContext()$path))
+data_folders <- list.dirs("../data/", full.names = F, recursive  = F)
+most_recent <- as.character(max(as.Date(data_folders)))
+
+profiles_ontario <- read.csv(paste0("../data/",most_recent,"/profiles_ontario.csv")) |> 
+  select(-X) |> separate(location, c("city", "province"))
+
+data("stop_words")
+about_me_text <- profiles_ontario |> 
+  select(about_me) |> pull() 
+
+profiles_ontario
+```
+
+```{r}
+gta_mun <- read.csv("../data/gta_municipalities.csv")
+gta_regions <- c(gta_mun$Census.subdivision, "Scarborough", "North York",
+                 "Etobicoke", "York", "Toronto Island", "East York")
+profiles_gta <- profiles_ontario |> filter(city %in% gta_regions)
+profiles_gta
+```
+
+
+The next step in the text mining process is to convert our data into tidy format, this means one token per row. We will use the `stop_words` dataset to eliminate nexus words from the text, and focus only in the important stuff. 
+```{r}
+profiles_word <- profiles_ontario |> 
+  select(name, about_me) |> 
+  unnest_tokens(word, about_me) |> 
+  anti_join(stop_words, join_by(word))
+
+head(profiles_word)
+```
+Below is a visualization of the 15 most common words in the "About Me" sections of Nanny's profiles. 
+```{r}
+profiles_word |> 
+  count(word) |> 
+  slice_max(n, n = 15) |> 
+  mutate(word = reorder(word, n)) |> 
+  ggplot(aes(n, word)) +
+  geom_col()
+```
+Unsurprisingly words like "care", "children", "nanny" were mentioned the most across all profile descriptions. One thing to keep in mind here are synonyms, and plural/singular word pairs. For example, children, kids and child could be treated as equal, and will be taking care of in the lemmanization process. \
+```{r}
+nrc <- get_sentiments("nrc")
+bing <- get_sentiments("bing")
+afinn <- get_sentiments("afinn")
+
+profiles_word_sentiment <- profiles_word |> 
+  inner_join(afinn, join_by(word))
+
+profiles_word_sentiment |> 
+  group_by(name) |> 
+  summarise(sentiment = mean(value)) |> 
+  mutate(name = reorder(name, sentiment)) |> 
+  ggplot(aes(sentiment, name)) + 
+  geom_col(fill = "steelblue") + theme_bw() +
+  xlab("Mean sentiment (AFINN score)") + ylab("") + 
+  theme(axis.ticks = element_blank(), axis.text.y = element_blank())
+```
+```{r}
+profiles_word |> 
+  inner_join(afinn, join_by(word)) |> 
+  group_by(name) |> 
+  mutate(mean_sentiment = mean(value)) |> 
+  filter(mean_sentiment < 0) |> 
+  select(-word) |> 
+  left_join(profiles_word, by = join_by(name))
+
+```
+
+
+
+```{r}
+profiles_word |> 
+  inner_join(nrc, join_by(word)) |> 
+  count(sentiment) |> 
+  mutate(sentiment = reorder(sentiment, n)) |> 
+  ggplot(aes(n, sentiment)) +
+  geom_col(fill = "steelblue3")
+```
+
+
+
+
+```{r}
+profiles_word <- profiles_gta |> 
+  select(name, about_me) |> 
+  unnest_tokens(word, about_me) |> 
+  count(name, word, sort = T) |> 
+  group_by(name) |> 
+  mutate(total_words = n()) 
+
+new_profiles <- profiles_word |> 
+  group_by(name) |> 
+  summarise(total_words = max(total_words)) |> 
+  top_n(4, total_words) |> 
+  inner_join(profiles_word, c("name", "total_words")) |> 
+  mutate(proportion = n/total_words) 
+
+new_profiles |>   
+  ggplot(aes(proportion, fill = name)) + 
+  geom_histogram() + facet_wrap(~name, scales = "free")
+  
+
+```
+```{r }
+profiles_word |> 
+  bind_tf_idf(word, name, n) |> 
+  group_by(name) |> 
+  slice_max(tf_idf, n = 5) |> 
+  ungroup() |>
+  filter(name %in% new_profiles$name) |> 
+  ggplot(aes(tf_idf, word, fill = name)) + 
+  geom_col() + facet_wrap(~name, scales = "free", ncol = 2)
+```
+Doing text analysis by consider each word as a separate entity isn't enough, we need to understand words in the context they were written. In the next part we analyze bigrams and create a graph
+```{r}
+profiles_bigrams <- profiles_ontario |> 
+  select(name, about_me) |> 
+  unnest_tokens(bigram, about_me, token = "ngrams", n = 2) |> 
+  filter(!is.na(bigram))
+
+profiles_bigrams |> 
+  count(bigram, sort = T)
+```
+Unsurprisingly the most common bigrams are "i am" and "i have". These bigrams aren't that useful, since they will be very common in any kind of text, therefore, removing stop words might be the best way forward.
+```{r}
+bigrams_filtered <- profiles_bigrams |> 
+  separate(bigram, c("word1", "word2"), sep = " ") |> 
+  filter(!word1 %in% stop_words$word,
+         !word2 %in% stop_words$word) 
+
+bigram_counts <- bigrams_filtered |> 
+  count(word1, word2, sort = T)
+bigram_counts
+```
+We can also compute the tf_idf for bigrams, although this results appear to be a little more tricky to analyze, since many bigrams only appear once in every profile. 
+```{r}
+bigrams_filtered |> 
+  unite(bigram, word1, word2, sep = " ") |> 
+  count(name, bigram, sort = T) |> 
+  bind_tf_idf(bigram, name, n) |> 
+  filter(name %in% new_profiles$name) |> 
+  arrange(-tf_idf) |> 
+  group_by(name) |> 
+  slice_max(tf_idf, n = 5) |> 
+  ungroup() 
+  
+```
+## Visualizing bigram occurrence
+The `igraph` package makes it easy to create a "graph", meaning a network of nodes, where each node is a singular word and a segment unites the nodes (words) that appear together. 
+```{r}
+bigram_graph <- bigram_counts %>%
+  filter(n > 15) %>%
+  graph_from_data_frame()
+
+bigram_graph
+```
+Once the graph object is created we can use the `ggraph` package to visualize it. 
+
+```{r fig.height=5, fig.width=7}
+set.seed(2020)
+
+a <- grid::arrow(type = "closed", length = unit(.15, "inches"))
+
+ggraph(bigram_graph, layout = "fr") +
+  geom_edge_link(aes(edge_alpha = n), show.legend = FALSE, arrow = a,
+                  end_cap = circle(.07, 'inches')) +
+  geom_node_point(color = "lightblue", size = 4) +
+  geom_node_text(aes(label = name), vjust = 1, hjust = 1, size = 3) +
+  theme_void()
+```
+
+From the image above we can see that there are 3 main nodes for nanny, school and care. It's important to note that these are completely separated from each other. 
+
+
+```{r}
+word_cors <- profiles_word |> 
+  group_by(word) |> 
+  filter(n() >= 20) |> 
+  pairwise_cor(word, name, sort = T)
+
+word_cors %>%
+  filter(item1 %in% c("nanny", "ontario", "rate", "housekeeping")) %>%
+  group_by(item1) %>%
+  slice_max(correlation, n = 6) %>%
+  ungroup() %>%
+  arrange(-correlation) |> 
+  mutate(item2 = reorder(item2, correlation)) |> 
+  ggplot(aes(item2, correlation)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~ item1, scales = "free") +
+  coord_flip()
+```
+
+```{r}
+set.seed(2016)
+
+word_cors %>%
+  filter(correlation > .40) %>%
+  graph_from_data_frame() %>%
+  ggraph(layout = "fr") +
+  geom_edge_link(aes(edge_alpha = correlation), show.legend = FALSE) +
+  geom_node_point(color = "lightblue", size = 5) +
+  geom_node_text(aes(label = name), repel = TRUE) +
+  theme_void()
+```
+
+
+
+
+
+In this next part we will do some LDA stuff.
+```{r}
+profiles_dtm <- profiles_word |> 
+  anti_join(stop_words, by = "word") |> 
+  cast_dtm(name, word, n)
+
+profiles_lda <- LDA(profiles_dtm, k = 10, control = list(seed = 1234))
+
+profile_topics <- tidy(profiles_lda, matrix = "beta")
+
+profiles_top_terms <- profile_topics %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 10) %>% 
+  ungroup() %>%
+  arrange(topic, -beta)
+
+profiles_top_terms %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
+```
+```{r fig.width=4, fig.height=20}
+profiles_names <- tidy(profiles_lda, matrix = "gamma")
+profiles_names |> 
+  filter(gamma > 1e-3) |> 
+  ggplot(aes(gamma, document, fill = factor(topic))) + 
+  geom_col(show.legend = FALSE) + 
+  facet_wrap(~topic, scales = "free", ncol = 1) + 
+  scale_y_reordered()
+```
+```{r}
+profiles_names |> 
+  group_by(document) |> 
+  slice_max(gamma, n = 1) |> 
+  ungroup() |> 
+  mutate(name = document) |>
+  select(-document) |> 
+  inner_join(profiles_data)
+```
+```{r}
+profiles_names |> 
+  mutate(name = document) |> 
+  select(-document) |> 
+  
+```
+
+
+
+
+```{r}
+profiles_data |> 
+  select(about_me) |>
+  pull() |> 
+  str_extract("(.{25})(experience)")
+```
+
+
